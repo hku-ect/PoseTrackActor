@@ -26,6 +26,7 @@ class skeletonActor(object):
         self.timeout = 50        # Use this timeout value for when you need recurring handleTimer events
                                     # Set to -1 to wait infinite (default)
         self.count = 0;
+        self.ts = time.time()
         
         base_options = python.BaseOptions(model_asset_path='pose_landmarker.task')
         options = vision.PoseLandmarkerOptions(
@@ -65,7 +66,7 @@ class skeletonActor(object):
             # The documentation suggets to use: mp.Timestamp.from_seconds(time.time()).value
             # but we use a simple coutner otherwise we get the error/warning: 
             # one_euro_filter.cc:31] New timestamp is equal or less than the last one.
-            detection_result = self.detector.detect_for_video(mp_image, mp.Timestamp.from_seconds(self.count).value)
+            detection_result = self.detector.detect_for_video(mp_image, mp.Timestamp.from_seconds(time.time()-self.ts).value)
             #detection_result = self.detector.detect_async(mp_image, mp.Timestamp.from_seconds(time.time()).value)
             
 
